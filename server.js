@@ -1,3 +1,5 @@
+const session = require('express-session');
+const userController = require('./controllers/userController');
 const express = require('express');
 const path = require('path');
 const movieController = require('./controllers/movieController');
@@ -9,6 +11,17 @@ const PORT = 3000;
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
+
+// Session middleware
+app.use(session({
+    secret: 'moviehub-secret-key-change-this-later',
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+        httpOnly: true,
+        maxAge: 1000 * 60 * 60
+    }
+}));
 
 // EJS configuration
 app.set('view engine', 'ejs');
@@ -26,6 +39,14 @@ app.get('/movies', movieController.showMovies);
 app.get('/about', (req, res) => {
     res.render('about');
 });
+
+// Registration routes
+app.get('/register', userController.showRegister);
+app.post('/register', userController.registerUser);
+
+// Login routes
+app.get('/login', userController.showLogin);
+app.post('/login', userController.loginUser);
 
 // Start server
 app.listen(PORT, () => {
