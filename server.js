@@ -1,4 +1,3 @@
-
 const express = require('express');
 const path = require('path');
 
@@ -14,12 +13,23 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
-// Home route
+// Homepage route
 app.get('/', (req, res) => {
-    res.send('Welcome to MovieHub!');
+    res.render('home');
+});
+
+// Movies route
+app.get('/movies', (req, res) => {
+    res.render('movies');
+});
+
+// About route
+app.get('/about', (req, res) => {
+    res.render('about');
 });
 
 // Start server
 app.listen(PORT, () => {
     console.log(`MovieHub is running at http://localhost:${PORT}`);
 });
+
