@@ -1,40 +1,28 @@
 <%- include('partials/header') %>
 
-<section class="page-heading">
+<section class="movies-section">
     <h1>Explore Movies</h1>
-    <p>Discover your next favorite movie.</p>
-</section>
+    <p>Discover movies from different genres.</p>
 
-<section class="movie-section">
     <div class="movie-grid">
+        <% movies.forEach(movie => { %>
+            <% const genre = genres.find(g => g.id === movie.genreId); %>
 
-        <div class="movie-card">
-            <div class="movie-poster">🎬</div>
-            <div class="movie-info">
-                <h3>Interstellar</h3>
-                <p>2014 | Sci-Fi</p>
-                <p>Rating: 8.7/10</p>
+            <div class="movie-card">
+                <div class="movie-info">
+                    <h2><%= movie.title %></h2>
+
+                    <p><%= movie.description %></p>
+
+                    <p>Release Year: <%= movie.releaseYear %></p>
+
+                    <p>Genre: <%= genre ? genre.name : 'Unknown' %></p>
+
+                    <p>Rating: <%= movie.rating %>/10</p>
+                </div>
             </div>
-        </div>
 
-        <div class="movie-card">
-            <div class="movie-poster">🎬</div>
-            <div class="movie-info">
-                <h3>Inception</h3>
-                <p>2010 | Sci-Fi</p>
-                <p>Rating: 8.8/10</p>
-            </div>
-        </div>
-
-        <div class="movie-card">
-            <div class="movie-poster">🎬</div>
-            <div class="movie-info">
-                <h3>The Dark Knight</h3>
-                <p>2008 | Action</p>
-                <p>Rating: 9.0/10</p>
-            </div>
-        </div>
-
+        <% }) %>
     </div>
 </section>
 

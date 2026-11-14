@@ -1,5 +1,6 @@
 const express = require('express');
 const path = require('path');
+const movieController = require('./controllers/movieController');
 
 const app = express();
 const PORT = 3000;
@@ -19,9 +20,7 @@ app.get('/', (req, res) => {
 });
 
 // Movies route
-app.get('/movies', (req, res) => {
-    res.render('movies');
-});
+app.get('/movies', movieController.showMovies);
 
 // About route
 app.get('/about', (req, res) => {
