@@ -41,6 +41,24 @@ function getAllMovies() {
     return movies;
 }
 
+// Search movies by title
+function searchMovies(searchTerm) {
+    return movies.filter(movie =>
+        movie.title.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+}
+
+// Filter movies by genre
+function filterMoviesByGenre(genreId) {
+    if (!genreId) {
+        return movies;
+    }
+
+    return movies.filter(movie =>
+        movie.genreId === Number(genreId)
+    );
+}
+
 // Get all genres
 function getAllGenres() {
     return genres;
@@ -51,5 +69,7 @@ module.exports = {
     Movie,
     Genre,
     getAllMovies,
-    getAllGenres
+    getAllGenres,
+    searchMovies,
+    filterMoviesByGenre
 };

@@ -4,6 +4,34 @@
     <h1>Explore Movies</h1>
     <p>Discover movies from different genres.</p>
 
+    <form action="/movies" method="GET" class="filter-form">
+
+    <input
+        type="text"
+        name="search"
+        placeholder="Search movies by title..."
+        value="<%= searchTerm %>"
+    >
+
+    <select name="genre">
+        <option value="">All Genres</option>
+
+        <% genres.forEach(genre => { %>
+            <option
+                value="<%= genre.id %>"
+                <%= String(selectedGenre) === String(genre.id) ? 'selected' : '' %>
+            >
+                <%= genre.name %>
+            </option>
+        <% }) %>
+    </select>
+
+    <button type="submit" class="btn">Search</button>
+
+    <a href="/movies" class="btn">Clear Filters</a>
+
+</form>
+
     <div class="movie-grid">
         <% movies.forEach(movie => { %>
             <% const genre = genres.find(g => g.id === movie.genreId); %>
