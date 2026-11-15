@@ -19,6 +19,11 @@
                     <p>Genre: <%= genre ? genre.name : 'Unknown' %></p>
 
                     <p>Rating: <%= movie.rating %>/10</p>
+                    <form action="/watchlist/add/<%= movie.id %>" method="POST">
+                    <button type="submit" class="btn">
+                     Add to Watchlist
+                </button>
+            </form>
                 </div>
             </div>
 

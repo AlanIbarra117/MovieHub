@@ -1,0 +1,36 @@
+<%- include('partials/header') %>
+
+<section class="movies-section">
+    <h1>My Watchlist</h1>
+    <p>Movies you have saved to watch later.</p>
+
+    <% if (movies.length === 0) { %>
+        <p class="empty-message">
+            Your watchlist is empty. Explore the movie catalog to add movies!
+        </p>
+        <a href="/movies" class="btn">Explore Movies</a>
+    <% } else { %>
+
+        <div class="movie-grid">
+            <% movies.forEach(movie => { %>
+                <div class="movie-card">
+                    <div class="movie-info">
+                        <h2><%= movie.title %></h2>
+                        <p><%= movie.description %></p>
+                        <p>Release Year: <%= movie.releaseYear %></p>
+                        <p>Rating: <%= movie.rating %>/10</p>
+
+                        <form action="/watchlist/remove/<%= movie.id %>" method="POST">
+                            <button type="submit" class="btn">
+                                Remove from Watchlist
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            <% }) %>
+        </div>
+
+    <% } %>
+</section>
+
+<%- include('partials/footer') %>

@@ -3,6 +3,8 @@ const userController = require('./controllers/userController');
 const express = require('express');
 const path = require('path');
 const movieController = require('./controllers/movieController');
+const watchlistController = require('./controllers/watchlistController');
+const authMiddleware = require('./middleware/authMiddleware');
 
 const app = express();
 const PORT = 3000;
@@ -47,6 +49,11 @@ app.post('/register', userController.registerUser);
 // Login routes
 app.get('/login', userController.showLogin);
 app.post('/login', userController.loginUser);
+
+// Watchlist routes (login required)
+app.get('/watchlist', authMiddleware.requireAuth, watchlistController.showWatchlist);
+app.post('/watchlist/add/:id', authMiddleware.requireAuth, watchlistController.addMovie);
+app.post('/watchlist/remove/:id', authMiddleware.requireAuth, watchlistController.removeMovie);
 
 // Start server
 app.listen(PORT, () => {
