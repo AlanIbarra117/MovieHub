@@ -1,0 +1,100 @@
+<%- include('partials/header') %>
+
+<section class="reviews-section">
+    <h1>Reviews for <%= movie.title %></h1>
+
+    <p><%= movie.description %></p>
+
+    <hr>
+
+    <h2>Customer Reviews</h2>
+
+    <% if (reviews.length === 0) { %>
+        <p>No reviews yet. Be the first to review this movie!</p>
+    <% } else { %>
+
+        <% reviews.forEach(review => { %>
+            <div class="review-card">
+                <h3>Rating: <%= review.rating %>/10</h3>
+
+                <p><%= review.comment %></p>
+
+                <small>
+                    Posted: <%= review.date.toLocaleDateString() %>
+                </small>
+
+                <% if (currentUserId === review.userId) { %>
+
+                    <form
+                        action="/movies/<%= movie.id %>/reviews/<%= review.id %>/update"
+                        method="POST"
+                    >
+                        <label>Update Rating:</label>
+                        <input
+                            type="number"
+                            name="rating"
+                            min="1"
+                            max="10"
+                            value="<%= review.rating %>"
+                            required
+                        >
+
+                        <label>Update Comment:</label>
+                        <textarea name="comment" required><%= review.comment %></textarea>
+
+                        <button type="submit">Update Review</button>
+                    </form>
+
+                    <form
+                        action="/movies/<%= movie.id %>/reviews/<%= review.id %>/delete"
+                        method="POST"
+                    >
+                        <button type="submit">Delete Review</button>
+                    </form>
+
+                <% } %>
+            </div>
+        <% }) %>
+
+    <% } %>
+
+    <hr>
+
+    <h2>Write a Review</h2>
+
+    <% if (currentUserId) { %>
+
+        <form action="/movies/<%= movie.id %>/reviews" method="POST">
+
+            <label for="rating">Rating (1-10):</label>
+            <input
+                type="number"
+                id="rating"
+                name="rating"
+                min="1"
+                max="10"
+                required
+            >
+
+            <label for="comment">Your Review:</label>
+            <textarea
+                id="comment"
+                name="comment"
+                required
+            ></textarea>
+
+            <button type="submit">Submit Review</button>
+
+        </form>
+
+    <% } else { %>
+
+        <p>Please <a href="/login">log in</a> to write a review.</p>
+
+    <% } %>
+
+    <a href="/movies" class="btn">Back to Movies</a>
+
+</section>
+
+<%- include('partials/footer') %>

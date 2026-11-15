@@ -5,6 +5,7 @@ const path = require('path');
 const movieController = require('./controllers/movieController');
 const watchlistController = require('./controllers/watchlistController');
 const authMiddleware = require('./middleware/authMiddleware');
+const reviewController = require('./controllers/reviewController');
 
 const app = express();
 const PORT = 3000;
@@ -54,6 +55,27 @@ app.post('/login', userController.loginUser);
 app.get('/watchlist', authMiddleware.requireAuth, watchlistController.showWatchlist);
 app.post('/watchlist/add/:id', authMiddleware.requireAuth, watchlistController.addMovie);
 app.post('/watchlist/remove/:id', authMiddleware.requireAuth, watchlistController.removeMovie);
+
+// Review routes (login required)
+app.get('/movies/:id/reviews', reviewController.showReviews);
+
+app.post(
+    '/movies/:id/reviews',
+    authMiddleware.requireAuth,
+    reviewController.createReview
+);
+
+app.post(
+    '/movies/:movieId/reviews/:reviewId/update',
+    authMiddleware.requireAuth,
+    reviewController.updateReview
+);
+
+app.post(
+    '/movies/:movieId/reviews/:reviewId/delete',
+    authMiddleware.requireAuth,
+    reviewController.deleteReview
+);
 
 // Start server
 app.listen(PORT, () => {
