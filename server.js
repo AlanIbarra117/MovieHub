@@ -28,6 +28,11 @@ app.use(session({
     }
 }));
 
+app.use((req, res, next) => {
+    res.locals.userRole = req.session.userRole;
+    next();
+});
+
 // EJS configuration
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
@@ -58,6 +63,16 @@ app.post('/register', userController.registerUser);
 // Login routes
 app.get('/login', userController.showLogin);
 app.post('/login', userController.loginUser);
+
+app.post('/logout', (req, res) => {
+    req.session.destroy((error) => {
+        if (error) {
+            return res.status(500).send('Unable to log out.');
+        }
+
+        res.redirect('/');
+    });
+});
 
 // Watchlist routes (login required)
 app.get('/watchlist', authMiddleware.requireAuth, watchlistController.showWatchlist);
