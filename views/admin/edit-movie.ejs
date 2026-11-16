@@ -1,0 +1,40 @@
+<%- include('../partials/header') %>
+
+<section class="page-heading">
+    <h1>Edit Movie</h1>
+    <p>Update the information for <%= movie.title %>.</p>
+</section>
+
+<form action="/admin/movies/<%= movie.id %>/edit" method="POST" class="auth-form">
+
+    <label>Movie Title</label>
+    <input type="text" name="title" value="<%= movie.title %>" required>
+
+    <label>Description</label>
+    <textarea name="description" required><%= movie.description %></textarea>
+
+    <label>Release Year</label>
+    <input type="number" name="releaseYear" value="<%= movie.releaseYear %>" min="1888" required>
+
+    <label>Rating</label>
+    <input type="number" name="rating" value="<%= movie.rating %>" min="0" max="10" step="0.1" required>
+
+    <label>Poster URL (optional)</label>
+    <input type="text" name="poster" value="<%= movie.poster %>">
+
+    <label>Genre</label>
+    <select name="genreId" required>
+        <% genres.forEach(genre => { %>
+            <option value="<%= genre.id %>" <%= Number(movie.genreId) === genre.id ? 'selected' : '' %>>
+                <%= genre.name %>
+            </option>
+        <% }) %>
+    </select>
+
+    <button type="submit" class="btn">Save Changes</button>
+
+</form>
+
+<a href="/admin">Back to Dashboard</a>
+
+<%- include('../partials/footer') %>

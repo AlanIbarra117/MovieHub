@@ -1,0 +1,33 @@
+<%- include('../partials/header') %>
+
+<section class="page-heading">
+    <h1>Admin Dashboard</h1>
+    <p>Manage the movies available in MovieHub.</p>
+</section>
+
+<div class="admin-actions">
+    <a href="/admin/movies/add" class="btn">Add New Movie</a>
+</div>
+
+<section class="movie-grid">
+    <% movies.forEach(movie => { %>
+        <div class="movie-card">
+            <h2><%= movie.title %></h2>
+            <p><%= movie.description %></p>
+            <p>Release Year: <%= movie.releaseYear %></p>
+            <p>Rating: <%= movie.rating %></p>
+
+            <div class="admin-actions">
+                <a href="/admin/movies/<%= movie.id %>/edit" class="btn">
+                    Edit
+                </a>
+
+                <form action="/admin/movies/<%= movie.id %>/delete" method="POST">
+                    <button type="submit" class="btn">Delete</button>
+                </form>
+            </div>
+        </div>
+    <% }) %>
+</section>
+
+<%- include('../partials/footer') %>
