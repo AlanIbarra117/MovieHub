@@ -23,6 +23,7 @@
     <% } %>
 
     <% if (userRole) { %>
+        <span class="welcome-user">Welcome, <%= userName %></span>
     <form action="/logout" method="POST" class="logout-form">
         <button type="submit" class="btn">Logout</button>
     </form>
