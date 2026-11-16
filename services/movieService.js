@@ -36,6 +36,9 @@ const movies = [
     new Movie(5, "Dune: Part Two", "A young leader faces his destiny.", 2024, 8.5, "", 4)
 ];
 
+// Generate unique IDs for new movies
+let nextMovieId = Math.max(...movies.map(movie => movie.id)) + 1;
+
 // Get all movies
 function getAllMovies() {
     return movies;
@@ -59,6 +62,54 @@ function filterMoviesByGenre(genreId) {
     );
 }
 
+// Add a new movie
+function addMovie(title, description, releaseYear, rating, poster, genreId) {
+    const newMovie = new Movie(
+        nextMovieId++,
+        title,
+        description,
+        Number(releaseYear),
+        Number(rating),
+        poster,
+        Number(genreId)
+    );
+
+    movies.push(newMovie);
+
+    return newMovie;
+}
+
+// Update an existing movie
+function updateMovie(id, title, description, releaseYear, rating, poster, genreId) {
+    const movie = movies.find(item => item.id === Number(id));
+
+    if (!movie) {
+        throw new Error('Movie not found.');
+    }
+
+    movie.title = title;
+    movie.description = description;
+    movie.releaseYear = Number(releaseYear);
+    movie.rating = Number(rating);
+    movie.poster = poster;
+    movie.genreId = Number(genreId);
+
+    return movie;
+}
+
+// Delete a movie
+function deleteMovie(id) {
+    const index = movies.findIndex(
+        movie => movie.id === Number(id)
+    );
+
+    if (index === -1) {
+        throw new Error('Movie not found.');
+    }
+
+    movies.splice(index, 1);
+}
+
 // Get all genres
 function getAllGenres() {
     return genres;
@@ -71,5 +122,8 @@ module.exports = {
     getAllMovies,
     getAllGenres,
     searchMovies,
-    filterMoviesByGenre
+    filterMoviesByGenre,
+    addMovie,
+    updateMovie,
+    deleteMovie
 };

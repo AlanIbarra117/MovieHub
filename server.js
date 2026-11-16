@@ -6,6 +6,8 @@ const movieController = require('./controllers/movieController');
 const watchlistController = require('./controllers/watchlistController');
 const authMiddleware = require('./middleware/authMiddleware');
 const reviewController = require('./controllers/reviewController');
+const adminController = require('./controllers/adminController');
+const userService = require('./services/userService');
 
 const app = express();
 const PORT = 3000;
@@ -37,6 +39,12 @@ app.get('/', (req, res) => {
 
 // Movies route
 app.get('/movies', movieController.showMovies);
+
+app.get('/admin/movies/:id/edit', authMiddleware.requireAuth, authMiddleware.requireAdmin, adminController.showEditMovie);
+
+app.post('/admin/movies/:id/edit', authMiddleware.requireAuth, authMiddleware.requireAdmin, adminController.updateMovie);
+
+app.post('/admin/movies/:id/delete', authMiddleware.requireAuth, authMiddleware.requireAdmin, adminController.deleteMovie);
 
 // About route
 app.get('/about', (req, res) => {
@@ -77,8 +85,26 @@ app.post(
     reviewController.deleteReview
 );
 
-// Start server
-app.listen(PORT, () => {
-    console.log(`MovieHub is running at http://localhost:${PORT}`);
-});
+// Admin routes
+app.get('/admin', authMiddleware.requireAuth, authMiddleware.requireAdmin, adminController.showDashboard);
+
+app.get('/admin/movies/add', authMiddleware.requireAuth, authMiddleware.requireAdmin, adminController.showAddMovie);
+
+app.post('/admin/movies/add', authMiddleware.requireAuth, authMiddleware.requireAdmin, adminController.createMovie);
+
+// Start the server and create the Admin account
+async function startServer() {
+    try {
+        await userService.createAdminAccount();
+
+        app.listen(PORT, () => {
+            console.log(`MovieHub is running at http://localhost:${PORT}`);
+        });
+
+    } catch (error) {
+        console.error('Unable to start MovieHub:', error.message);
+    }
+}
+
+startServer();
 

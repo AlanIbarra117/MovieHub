@@ -63,9 +63,30 @@ async function verifyPassword(user, password) {
     return crypto.timingSafeEqual(passwordHash, storedHash);
 }
 
+// Create the initial administrator account
+async function createAdminAccount() {
+    const email = 'admin@moviehub.com';
+
+    const existingAdmin = findUserByEmail(email);
+
+    if (existingAdmin) {
+        return;
+    }
+
+    const admin = await registerUser(
+        'MovieHub Admin',
+        email,
+        'AdminMovieHub123'
+    );
+
+    admin.role = 'admin';
+
+}
+
 module.exports = {
     User,
     registerUser,
     findUserByEmail,
-    verifyPassword
+    verifyPassword,
+    createAdminAccount
 };

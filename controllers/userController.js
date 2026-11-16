@@ -48,7 +48,11 @@ async function loginUser(req, res) {
         req.session.userId = user.id;
         req.session.userRole = user.role;
 
-        res.redirect('/movies');
+        if (user.role === 'admin') {
+            res.redirect('/admin');
+        } else {
+            res.redirect('/movies');
+        }
 
     } catch (error) {
         res.status(500).render('login', {
