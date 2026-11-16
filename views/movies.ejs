@@ -37,6 +37,7 @@
             <% const genre = genres.find(g => g.id === movie.genreId); %>
 
             <div class="movie-card">
+                <img src="/images/<%= movie.poster %>" alt="<%= movie.title %> poster" class="movie-poster">
                 <div class="movie-info">
                     <h2><%= movie.title %></h2>
 

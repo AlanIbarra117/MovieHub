@@ -24,16 +24,24 @@ const genres = [
     new Genre(1, "Science Fiction"),
     new Genre(2, "Action"),
     new Genre(3, "Drama"),
-    new Genre(4, "Adventure")
+    new Genre(4, "Adventure"),
+    new Genre(5, "Comedy"),
+    new Genre(6, "Horror"),
+    new Genre(7, "Thriller"),
+    new Genre(8, "Romance"),
+    new Genre(9, "Animation"),
+    new Genre(10, "Fantasy"),
+    new Genre(11, "Mystery"),
+    new Genre(12, "Crime")
 ];
 
 // Movie catalog
 const movies = [
-    new Movie(1, "Interstellar", "A journey through space and time.", 2014, 8.7, "", 1),
-    new Movie(2, "Inception", "A thief enters people's dreams.", 2010, 8.8, "", 1),
-    new Movie(3, "The Dark Knight", "Batman protects Gotham City.", 2008, 9.0, "", 2),
-    new Movie(4, "The Shawshank Redemption", "A story of hope and friendship.", 1994, 9.3, "", 3),
-    new Movie(5, "Dune: Part Two", "A young leader faces his destiny.", 2024, 8.5, "", 4)
+    new Movie(1, "Interstellar", "A journey through space and time.", 2014, 8.7, "interstellar.jpg", 1),
+    new Movie(2, "Inception", "A thief enters people's dreams.", 2010, 8.8, "inception.jpg", 1),
+    new Movie(3, "The Dark Knight", "Batman protects Gotham City.", 2008, 9.0, "dark-knight.jpg", 2),
+    new Movie(4, "The Shawshank Redemption", "A story of hope and friendship.", 1994, 9.3, "shawshank.jpg", 3),
+    new Movie(5, "Dune: Part Two", "A young leader faces his destiny.", 2024, 8.5, "dune-part-two.jpg", 4)
 ];
 
 // Generate unique IDs for new movies
